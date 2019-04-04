@@ -16,12 +16,17 @@ RSpec.shared_examples 'Test for url' do |url|
     # config.proxy = Applitools::Connectivity::Proxy.new 'http://localhost:8000'
     config.api_key = ENV['APPLITOOLS_API_KEY']
     config.viewport_size = Applitools::RectangleSize.new(800, 600)
-    config.add_browser(800, 600, Applitools::Selenium::BrowserTypes::CHROME)
-          .add_browser(700, 500, Applitools::Selenium::BrowserTypes::CHROME)
-          .add_browser(1600, 1200, Applitools::Selenium::BrowserTypes::CHROME)
-          .add_browser(1280, 1024, Applitools::Selenium::BrowserTypes::CHROME)
-          .add_device_emulation(Applitools::Selenium::ChromeEmulationInfo.galaxy_s5(:portrait))
-          .add_device_emulation(Applitools::Selenium::ChromeEmulationInfo.i_phone_6_7_8_plus(:portrait))
+    config.add_browser(800, 600, BrowserTypes::CHROME)
+          .add_browser(1600, 1200, BrowserTypes::CHROME)
+          .add_browser(1600, 1200, BrowserTypes::FIREFOX)
+          .add_browser(1600, 1200, BrowserTypes::IE10)
+          .add_browser(1600, 1200, BrowserTypes::EDGE)
+          .add_browser(1600, 1200, BrowserTypes::IE11)
+          .add_browser(1280, 1024, BrowserTypes::CHROME)
+          .add_device_emulation(Applitools::Selenium::ChromeEmulationInfo.galaxy_s5(Orientations::PORTRAIT))
+          .add_device_emulation(Applitools::Selenium::ChromeEmulationInfo.i_phone_6_7_8_plus(Orientations::PORTRAIT))
+          .add_device_emulation(Applitools::Selenium::ChromeEmulationInfo.new(Devices::MicrosoftLumia550, Orientations::PORTRAIT))
+          .add_device_emulation(Applitools::Selenium::ChromeEmulationInfo.new(Devices::MicrosoftLumia950, Orientations::PORTRAIT))
     end
   end
 
@@ -52,7 +57,7 @@ end
 
 RSpec.describe 'My first visual grid test' do
   before(:all) do
-    @runner = Applitools::Selenium::VisualGridRunner.new(3)
+    @runner = Applitools::Selenium::VisualGridRunner.new(30)
     @eyes = Applitools::Selenium::Eyes.new(visual_grid_runner: @runner )
   end
 
@@ -61,5 +66,5 @@ RSpec.describe 'My first visual grid test' do
     @runner.stop
   end
 
-  it_behaves_like 'Test for url', 'https://youtube.com'
+  it_behaves_like 'Test for url', 'https://applitools.com'
 end
